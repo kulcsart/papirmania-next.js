@@ -100,6 +100,7 @@ export default function GallerySection() {
               alt: attributes?.alt || 'Gallery image',
             };
           });
+          console.log('Setting gallery images:', images);
           setGalleryImages(images);
         }
       } catch (error) {
@@ -165,10 +166,10 @@ export default function GallerySection() {
             </motion.div>
 
             {/* Gallery Masonry Grid */}
-            <div 
+            <div
               className="w-full columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 lg:gap-8"
             >
-              {galleryImages.map((image, index) => (
+              {console.log('Rendering gallery with', galleryImages.length, 'images') || galleryImages.map((image, index) => (
                 <button
                   key={image.id}
                   onClick={() => {
