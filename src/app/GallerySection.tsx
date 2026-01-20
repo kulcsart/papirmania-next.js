@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Lightbox from '../components/common/Lightbox';
@@ -176,13 +175,13 @@ export default function GallerySection() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Image
-                    unoptimized
+                  <img
                     src={image.src}
                     width={image.width}
                     height={image.height}
                     alt={image.alt}
                     className="w-full h-auto rounded-[16px]"
+                    loading="lazy"
                   />
                 </motion.button>
               ))}
