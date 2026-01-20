@@ -169,7 +169,7 @@ export default function GallerySection() {
               className="w-full columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 lg:gap-8"
             >
               {galleryImages.map((image, index) => (
-                <motion.button
+                <button
                   key={image.id}
                   onClick={() => {
                     setLightboxIndex(index);
@@ -177,12 +177,6 @@ export default function GallerySection() {
                   }}
                   className="w-full mb-4 sm:mb-6 lg:mb-8 cursor-pointer hover:opacity-90 transition-opacity break-inside-avoid"
                   style={{ breakInside: 'avoid' }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   <img
                     src={image.src}
@@ -192,7 +186,7 @@ export default function GallerySection() {
                     className="w-full h-auto rounded-[16px]"
                     loading="lazy"
                   />
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
