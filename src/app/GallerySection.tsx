@@ -11,57 +11,13 @@ export default function GallerySection() {
   const isLightTemplate = template === 'light'
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [galleryImages, setGalleryImages] = useState([
-    { 
-      id: 1, 
-      src: '/images/img_placeholder_image_532x524.png', 
-      width: 404, 
-      height: 402,
-      alt: 'Paper craft creation 1'
-    },
-    { 
-      id: 2, 
-      src: '/images/img_placeholder_image_228x406.png', 
-      width: 406, 
-      height: 228,
-      alt: 'Handmade paper item 2'
-    },
-    { 
-      id: 3, 
-      src: '/images/img_placeholder_image_416x404.png', 
-      width: 404, 
-      height: 416,
-      alt: 'Creative paper work 3'
-    },
-    { 
-      id: 4, 
-      src: '/images/img_placeholder_image_532x524.png', 
-      width: 404, 
-      height: 402,
-      alt: 'Paper art piece 4'
-    },
-    { 
-      id: 5, 
-      src: '/images/img_placeholder_image_228x406.png', 
-      width: 406, 
-      height: 228,
-      alt: 'Decorative paper craft 5'
-    },
-    { 
-      id: 6, 
-      src: '/images/img_placeholder_image_416x404.png', 
-      width: 404, 
-      height: 416,
-      alt: 'Paper creation showcase 6'
-    },
-    { 
-      id: 7, 
-      src: '/images/img_placeholder_image_404x404.png', 
-      width: 404, 
-      height: 404,
-      alt: 'Artisan paper work 7'
-    }
-  ]);
+  const [galleryImages, setGalleryImages] = useState<Array<{
+    id: number;
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+  }>>([]);
 
   useEffect(() => {
     const loadGalleryData = async () => {
