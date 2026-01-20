@@ -1,18 +1,19 @@
 'use client';
 import { useState } from 'react';
-import Image from 'next/image';
 import Button from '../ui/Button';
+import { useTemplate } from '../providers/TemplateProvider';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeMenuItem, setActiveMenuItem] = useState('')
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const { template, toggleTemplate } = useTemplate()
+  const isLightTemplate = template === 'light'
 
   const menuItems = [
-    { id: 'kurzusok', label: 'Kurzusok', href: '/courses' },
-    { id: 'technikak', label: 'Technikák', href: '/techniques' },
-    { id: 'galeria', label: 'Galéria', href: '/gallery' },
-    { id: 'rolam', label: 'Rólam', href: '/about' },
+    { id: 'kurzusok', label: 'Kurzusok', href: '/courses', targetId: 'courses-section' },
+    { id: 'technikak', label: 'Technikák', href: '/techniques', targetId: 'techniques-section' },
+    { id: 'galeria', label: 'Galéria', href: '/gallery', targetId: 'gallery-section' },
+    { id: 'rolam', label: 'Rólam', href: '/about', targetId: 'about-section' },
   ]
 
   const handleMenuItemClick = (itemId: string) => {
@@ -20,8 +21,18 @@ const Header = () => {
     setMenuOpen(false)
   }
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
+  const handleMenuClick = (targetId?: string, fallbackHref?: string) => {
+    if (targetId) {
+      const section = document.getElementById(targetId)
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+    }
+
+    if (fallbackHref) {
+      window.location.href = fallbackHref
+    }
   }
 
   return (
@@ -40,6 +51,7 @@ const Header = () => {
                   onClick={(e) => {
                     e.preventDefault()
                     handleMenuItemClick(item.id)
+                    handleMenuClick(item.targetId, item.href)
                   }}
                   className={`text-center uppercase transition-all duration-300 ${
                     activeMenuItem === item.id 
@@ -63,10 +75,8 @@ const Header = () => {
 
           {/* Center - Logo */}
           <div className="flex justify-center">
-            <Image
+            <img
               src="/images/img_papermania_logo.svg"
-              width={68}
-              height={68}
               alt="Papírmánia Logo"
               className="w-[68px] h-[68px]"
             />
@@ -74,31 +84,18 @@ const Header = () => {
 
           {/* Right - Actions */}
           <div className="flex-1 flex flex-row justify-end items-center gap-6">
-            
-            {/* Theme Toggle Button */}
+            {/* Template Toggle Button */}
             <button
-              onClick={toggleTheme}
+              onClick={toggleTemplate}
               className="p-2 hover:scale-110 transition-transform duration-300"
-              aria-label="Toggle theme"
-              title={isDarkMode ? 'Light mode' : 'Dark mode'}
+              aria-label="Sablon váltás"
+              title={isLightTemplate ? 'Sötét téma' : 'Világos téma'}
             >
-              {isDarkMode ? (
-                <Image
-                  src="/images/img_lucide_moon.svg"
-                  width={24}
-                  height={24}
-                  alt="Dark mode"
-                  className="w-6 h-6"
-                />
-              ) : (
-                <Image
-                  src="/images/img_lucide_sun.svg"
-                  width={24}
-                  height={24}
-                  alt="Light mode"
-                  className="w-6 h-6"
-                />
-              )}
+              <img
+                src={isLightTemplate ? '/images/img_lucide_sun.svg' : '/images/img_lucide_moon.svg'}
+                alt={isLightTemplate ? 'Light mode' : 'Dark mode'}
+                className="w-6 h-6"
+              />
             </button>
 
             {/* Contact Button */}
@@ -123,40 +120,26 @@ const Header = () => {
           </button>
 
           {/* Mobile Logo - Centered */}
-          <Image
+          <img
             src="/images/img_papermania_logo.svg"
-            width={56}
-            height={56}
             alt="Papírmánia Logo"
             className="w-[56px] h-[56px]"
           />
 
           {/* Mobile Actions */}
           <div className="flex flex-row items-center gap-2">
-            {/* Mobile Theme Toggle */}
+            {/* Mobile Template Toggle */}
             <button
-              onClick={toggleTheme}
+              onClick={toggleTemplate}
               className="p-2 hover:scale-110 transition-transform duration-300"
-              aria-label="Toggle theme"
-              title={isDarkMode ? 'Light mode' : 'Dark mode'}
+              aria-label="Sablon váltás"
+              title={isLightTemplate ? 'Sötét téma' : 'Világos téma'}
             >
-              {isDarkMode ? (
-                <Image
-                  src="/images/img_lucide_moon.svg"
-                  width={20}
-                  height={20}
-                  alt="Dark mode"
-                  className="w-5 h-5"
-                />
-              ) : (
-                <Image
-                  src="/images/img_lucide_sun.svg"
-                  width={20}
-                  height={20}
-                  alt="Light mode"
-                  className="w-5 h-5"
-                />
-              )}
+              <img
+                src={isLightTemplate ? '/images/img_lucide_sun.svg' : '/images/img_lucide_moon.svg'}
+                alt={isLightTemplate ? 'Light mode' : 'Dark mode'}
+                className="w-5 h-5"
+              />
             </button>
           </div>
         </div>
@@ -172,6 +155,7 @@ const Header = () => {
                   onClick={(e) => {
                     e.preventDefault()
                     handleMenuItemClick(item.id)
+                    handleMenuClick(item.targetId, item.href)
                   }}
                   className={`text-center uppercase transition-all duration-300 ${
                     activeMenuItem === item.id 

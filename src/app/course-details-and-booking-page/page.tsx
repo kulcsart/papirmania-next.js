@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 
-import Image from 'next/image';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import Button from '@/components/ui/Button';
@@ -111,11 +110,10 @@ export default function CourseDetailsAndBookingPage() {
               
               {/* Course Image */}
               <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] rounded-[16px] overflow-hidden">
-                <Image
+                <img
                   src={courseData.image}
                   alt={courseData.title}
-                  fill
-                  className="object-cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
 
@@ -277,11 +275,10 @@ export default function CourseDetailsAndBookingPage() {
                 <div className="animate-fadeIn">
                   <div className="flex flex-col sm:flex-row gap-6 items-start">
                     <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden flex-shrink-0">
-                      <Image
+                      <img
                         src={courseData.instructor.image}
                         alt={courseData.instructor.name}
-                        fill
-                        className="object-cover"
+                        className="object-cover w-full h-full"
                       />
                     </div>
                     <div className="flex-1">
@@ -385,11 +382,10 @@ export default function CourseDetailsAndBookingPage() {
                   {/* Avatar and Name */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="relative w-[48px] h-[48px] rounded-full overflow-hidden">
-                      <Image
+                      <img
                         src={testimonial.avatar}
                         alt={testimonial.name}
-                        fill
-                        className="object-cover"
+                        className="object-cover w-full h-full"
                       />
                     </div>
                     <div>

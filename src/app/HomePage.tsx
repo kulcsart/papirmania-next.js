@@ -14,6 +14,8 @@ import strapiService from '../services/strapi.service';
 import type {
   StrapiCoursesResponse,
   StrapiTestimonialsResponse,
+  StrapiImage,
+  StrapiImageData,
 } from '../types/strapi.types';
 
 interface Course {
@@ -39,35 +41,48 @@ export default function HomePage() {
   const [testimonials, setTestimonials] = useState<TestimonialData[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
+  const getImageAttributes = (image?: StrapiImage | StrapiImageData | null) => {
+    if (!image) return null;
+    if ('data' in image) {
+      return image.data?.attributes ?? null;
+    }
+    return image;
+  };
+
   useEffect(() => {
     const loadPageData = async () => {
       try {
         // Fetch courses from Strapi
         const coursesResponse: StrapiCoursesResponse = await strapiService.getCourses();
-        const coursesData: Course[] = coursesResponse.data.map((course) => ({
-          id: course.id.toString(),
-          title: course.title || course.attributes?.title,
-          price: course.price || course.attributes?.price,
-          description: course.description || course.attributes?.description,
-          features: course.features || course.attributes?.features || [],
-        }));
+        const coursesData: Course[] = coursesResponse.data.map((course) => {
+          const attributes = course.attributes ?? course;
+          return {
+            id: course.id.toString(),
+            title: attributes?.title ?? '',
+            price: attributes?.price ?? '',
+            description: attributes?.description ?? '',
+            features: attributes?.features || [],
+          };
+        });
 
         // Fetch testimonials from Strapi
         const testimonialsResponse: StrapiTestimonialsResponse = await strapiService.getTestimonials();
         const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
-        const testimonialsData: TestimonialData[] = testimonialsResponse.data.map((testimonial) => ({
-          id: testimonial.id.toString(),
-          name: testimonial.name || testimonial.attributes?.name,
-          role: testimonial.role || testimonial.attributes?.role,
-          location: testimonial.location || testimonial.attributes?.location,
-          rating: testimonial.rating || testimonial.attributes?.rating,
-          comment: testimonial.comment || testimonial.attributes?.comment,
-          avatar: testimonial.avatar?.data
-            ? `${STRAPI_API_URL}${testimonial.avatar.data.attributes.url}`
-            : testimonial.attributes?.avatar?.data
-            ? `${STRAPI_API_URL}${testimonial.attributes.avatar.data.attributes.url}`
-            : '/images/img_avatar_image.png',
-        }));
+        const testimonialsData: TestimonialData[] = testimonialsResponse.data.map((testimonial) => {
+          const attributes = testimonial.attributes ?? testimonial;
+          const mediaData = getImageAttributes(attributes?.media ?? null);
+          return {
+            id: testimonial.id.toString(),
+            name: attributes?.name ?? '',
+            role: attributes?.role ?? '',
+            location: attributes?.location ?? '',
+            rating: attributes?.rating ?? 0,
+            comment: attributes?.comment ?? '',
+            avatar: mediaData?.url
+              ? `${STRAPI_API_URL}${mediaData.url}`
+              : '/images/img_avatar_image.png',
+          };
+        });
 
         setCourses(coursesData);
         setTestimonials(testimonialsData);

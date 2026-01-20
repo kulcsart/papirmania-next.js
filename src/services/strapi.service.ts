@@ -29,42 +29,42 @@ class StrapiService {
 
   // Fetch courses
   async getCourses() {
-    return this.get('/courses', {
+    return this.get<import('../types/strapi.types').StrapiCoursesResponse>('/courses', {
       populate: '*',
     });
   }
 
   // Fetch single course by ID
   async getCourseById(id: string) {
-    return this.get(`/courses/${id}`, {
+    return this.get<import('../types/strapi.types').StrapiCourse>(`/courses/${id}`, {
       populate: '*',
     });
   }
 
   // Fetch testimonials
   async getTestimonials() {
-    return this.get('/testimonials', {
+    return this.get<import('../types/strapi.types').StrapiTestimonialsResponse>('/testimonials', {
       populate: '*',
     });
   }
 
   // Fetch gallery items
   async getGalleryItems() {
-    return this.get('/gallery-items', {
+    return this.get<import('../types/strapi.types').StrapiGalleryResponse>('/gallery-items', {
       populate: '*',
     });
   }
 
   // Fetch techniques
   async getTechniques() {
-    return this.get('/techniques', {
+    return this.get<import('../types/strapi.types').StrapiTechniquesResponse>('/techniques', {
       populate: '*',
     });
   }
 
   // Fetch single technique by ID or slug
   async getTechniqueById(id: string) {
-    return this.get(`/techniques/${id}`, {
+    return this.get<import('../types/strapi.types').StrapiTechnique>(`/techniques/${id}`, {
       populate: '*',
     });
   }

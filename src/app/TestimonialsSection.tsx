@@ -1,6 +1,8 @@
 'use client';
 import Image from'next/image';
- import RatingBar from'../components/ui/RatingBar';
+import { motion } from 'framer-motion';
+import RatingBar from'../components/ui/RatingBar';
+import { useTemplate } from '../components/providers/TemplateProvider';
 
 interface TestimonialData {
   id: string;
@@ -18,47 +20,72 @@ interface TestimonialsSectionProps {
 }
 
 export default function TestimonialsSection({ testimonials, loading }: TestimonialsSectionProps) {
+  const { template } = useTemplate()
+  const isLightTemplate = template === 'light'
+
   return (
-    <section className="w-full bg-[#7b6a3f]" id="testimonials-section">
+    <section
+      className={`w-full ${isLightTemplate ? 'bg-[#f5f1e8]' : 'bg-[#7b6a3f]'}`}
+      id="testimonials-section"
+    >
       <div className="w-full">
         <div className="w-full max-w-content mx-auto px-[40px] sm:px-[60px] lg:px-[80px] py-[56px] sm:py-[84px] lg:py-[112px]">
-          <div className="flex flex-col gap-[40px] sm:gap-[60px] lg:gap-[80px] justify-center items-center w-full">
+          <div className="flex flex-col gap-[48px] justify-center items-center w-full">
         
             {/* Section Header */}
-            <div className="flex flex-col justify-start items-center w-full max-w-[52%] px-4">
+            <motion.div 
+              className="flex flex-col justify-start items-center w-full max-w-[52%] px-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <span
-                className="text-base font-extrabold leading-[150%] text-center uppercase mb-2"
-                style={{ fontFamily: 'DM Sans', color: 'var(--light, #ECE6E1)' }}
+                className={`text-base font-extrabold leading-[150%] text-center uppercase ${
+                  isLightTemplate ? 'text-[#3b3935]' : 'text-[#ECE6E1]'
+                }`}
+                style={{ fontFamily: 'DM Sans' }}
               >
                 Rólunk mondtátok
               </span>
           
               <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-center items-center w-full">
                 <h2 
-                  className="text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center text-white"
+                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center ${
+                    isLightTemplate ? 'text-[#3b3935]' : 'text-white'
+                  }`}
                   style={{ 
                     fontFamily: 'Maname',
-                    textShadow: '0 0 4px rgba(224, 168, 136, 0.40)'
+                    textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
+                    marginBlockStart: '0px',
+                    marginBlockEnd: '40px'
                   }}
                 >
                   Visszajelzések
                 </h2>
             
                 <p 
-                  className="text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-center text-[#E6E4DC]"
+                  className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-center ${
+                    isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
+                  }`}
                   style={{ fontFamily: 'DM Sans' }}
                 >
                   Amit a résztvevők mondtak rólunk.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Testimonials Grid */}
             <div className="w-full">
               {loading ? (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                   {[...Array(4)].map((_, index) => (
-                    <div key={index} className="bg-[#ffffff33] rounded-[16px] p-8 animate-pulse">
+                    <div
+                      key={index}
+                      className={`rounded-[16px] p-8 animate-pulse ${
+                        isLightTemplate ? 'bg-white border border-[#c8c1b4]' : 'bg-[#ffffff33]'
+                      }`}
+                    >
                       <div className="h-6 bg-gray-300 rounded mb-4"></div>
                       <div className="h-20 bg-gray-300 rounded mb-4"></div>
                       <div className="flex gap-4">
@@ -73,10 +100,21 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                 </div>
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-                  {testimonials.map((testimonial) => (
-                    <div 
+                  {testimonials.map((testimonial, index) => (
+                    <motion.div 
                       key={testimonial.id} 
-                      className="bg-[#ffffff33] rounded-[16px] p-[15px] sm:p-[23px] lg:p-[30px] h-auto"
+                      className={`rounded-[16px] p-[15px] sm:p-[23px] lg:p-[30px] h-auto ${
+                        isLightTemplate ? 'bg-white border border-[#c8c1b4]' : 'bg-[#ffffff33]'
+                      }`}
+                      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: index * 0.15,
+                        ease: "easeOut"
+                      }}
+                      whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
                     >
                       <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-start items-start w-full">
                         
@@ -92,7 +130,7 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                         ) : (
                           <RatingBar 
                             rating={testimonial.rating}
-                            readOnly
+                            readonly
                             layout_width="auto"
                           />
                         )}
@@ -108,34 +146,24 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                           </p>
 
                           {/* User Info */}
-                          <div className="flex flex-row gap-[12px] sm:gap-[14px] lg:gap-[16px] justify-start items-center w-full">
-                            <Image
-                              src={testimonial.avatar}
-                              width={48}
-                              height={48}
-                              alt={`${testimonial.name} avatar`}
-                              className="w-[36px] h-[36px] sm:w-[42px] sm:h-[42px] lg:w-[48px] lg:h-[48px] rounded-[50%] flex-shrink-0"
-                            />
+                          <div className="flex flex-col gap-[1px] sm:gap-[2px] lg:gap-[3px] justify-start items-start w-full">
+                            <span 
+                              className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
+                              style={{ fontFamily: 'DM Sans' }}
+                            >
+                              {testimonial.name}
+                            </span>
                             
-                            <div className="flex flex-col gap-[1px] sm:gap-[2px] lg:gap-[3px] justify-start items-start flex-1">
-                              <span 
-                                className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
-                                style={{ fontFamily: 'DM Sans' }}
-                              >
-                                {testimonial.name}
-                              </span>
-                              
-                              <span 
-                                className="text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
-                                style={{ fontFamily: 'DM Sans' }}
-                              >
-                                {testimonial.role}, {testimonial.location}
-                              </span>
-                            </div>
+                            <span 
+                              className="text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
+                              style={{ fontFamily: 'DM Sans' }}
+                            >
+                              {testimonial.role}, {testimonial.location}
+                            </span>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               )}

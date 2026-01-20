@@ -39,25 +39,29 @@
     "warning": "🚨 CRITICAL: DO NOT REMOVE OR MODIFY ABOVE DEPENDENCIES - Required for Next.js 15 TypeScript app functionality"
   },
   "scripts": {
-    "dev": "next dev -p 4028",
+    "dev": "next dev -p 3100",
     "build": "next build",
-    "start": "next dev -p 4028",
+    "start": "next start -p 3100",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "serve": "next start",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@dhiwise/component-tagger": "^1.0.14",
+    "@tailwindcss/typography": "^0.5.16",
+    "axios": "^1.13.2",
+    "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.26.2",
+    "marked": "^17.0.1",
     "next": "14.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@dhiwise/component-tagger": "^1.0.14",
-    "@tailwindcss/typography": "^0.5.16",
     "recharts": "^2.15.2",
-    "tailwind-merge": "^3.3.1",
-    "class-variance-authority": "^0.7.1",
-    "axios": "^1.13.2"
+    "resend": "^6.7.0",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.11.1",
     "@types/node": "^20",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.0",
@@ -65,7 +69,6 @@
     "postcss": "8.4.8",
     "prettier": "^3.5.3",
     "tailwindcss": "3.4.6",
-    "@netlify/plugin-nextjs": "^5.11.1",
     "typescript": "^5"
   }
 }

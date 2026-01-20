@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { useState } from 'react';
 
 interface LightboxProps {
@@ -61,13 +60,10 @@ export default function Lightbox({ images, initialIndex = 0, isOpen, onClose }: 
 
         {/* Image Container */}
         <div className="relative w-full max-w-4xl h-[60vh] flex items-center justify-center">
-          <Image
+          <img
             src={currentImage.src}
-            width={currentImage.width}
-            height={currentImage.height}
             alt={currentImage.alt}
             className="max-w-full max-h-full object-contain rounded-[8px]"
-            priority
           />
         </div>
 

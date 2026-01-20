@@ -27,7 +27,11 @@ export interface StrapiCourseAttributes {
 
 export interface StrapiCourse {
   id: number;
-  attributes: StrapiCourseAttributes;
+  attributes?: StrapiCourseAttributes;
+  title?: string;
+  price?: string;
+  description?: string;
+  features?: string[];
 }
 
 export interface StrapiCoursesResponse {
@@ -49,7 +53,7 @@ export interface StrapiTestimonialAttributes {
   location: string;
   rating: number;
   comment: string;
-  avatar?: StrapiImageData;
+  media?: StrapiImageData | StrapiImage;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -57,7 +61,13 @@ export interface StrapiTestimonialAttributes {
 
 export interface StrapiTestimonial {
   id: number;
-  attributes: StrapiTestimonialAttributes;
+  attributes?: StrapiTestimonialAttributes;
+  name?: string;
+  role?: string;
+  location?: string;
+  rating?: number;
+  comment?: string;
+  media?: StrapiImageData | StrapiImage;
 }
 
 export interface StrapiTestimonialsResponse {
@@ -75,7 +85,7 @@ export interface StrapiTestimonialsResponse {
 // Gallery Types
 export interface StrapiGalleryItemAttributes {
   alt: string;
-  image: StrapiImageData;
+  image: StrapiImageData | StrapiImage;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -83,7 +93,9 @@ export interface StrapiGalleryItemAttributes {
 
 export interface StrapiGalleryItem {
   id: number;
-  attributes: StrapiGalleryItemAttributes;
+  attributes?: StrapiGalleryItemAttributes;
+  alt?: string;
+  image?: StrapiImageData | StrapiImage;
 }
 
 export interface StrapiGalleryResponse {
@@ -103,8 +115,10 @@ export interface StrapiTechniqueAttributes {
   label: string;
   slug: string;
   title: string;
-  description: string;
-  image: StrapiImageData;
+  description?: string;
+  desctiption?: string;
+  desciption?: string;
+  image: StrapiImageData | StrapiImage;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -112,7 +126,14 @@ export interface StrapiTechniqueAttributes {
 
 export interface StrapiTechnique {
   id: number;
-  attributes: StrapiTechniqueAttributes;
+  attributes?: StrapiTechniqueAttributes;
+  label?: string;
+  slug?: string;
+  title?: string;
+  description?: string;
+  desctiption?: string;
+  desciption?: string;
+  image?: StrapiImageData | StrapiImage;
 }
 
 export interface StrapiTechniquesResponse {

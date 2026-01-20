@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import strapiService from '../services/strapi.service';
 import type { StrapiTechniquesResponse, StrapiImage, StrapiImageData } from '../types/strapi.types';
-import Image from'next/image';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
 type TechniqueType = 'cartonnage' | 'bookbinding' | 'boxes' | 'marble' | 'papermache';
@@ -269,10 +268,8 @@ export default function TechniquesSection() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.4, delay: 0.15 }}
                     >
-                      <Image
+                      <img
                         src={content.image}
-                        width={536}
-                        height={536}
                         alt={content.title}
                         className="w-full max-w-[536px] h-auto rounded-[16px]"
                       />
