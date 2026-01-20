@@ -66,12 +66,21 @@ export default function TechniquesSection() {
             const techniqueId = attributes?.slug || resolveTechniqueId(attributes?.label);
             const imageData = getImageAttributes(attributes?.image ?? null);
             if (!techniqueId) return;
+
+            // Build the correct image URL
+            let imageUrl = '/images/img_placeholder_image_536x536.png';
+            if (imageData?.url) {
+              // If URL is already absolute (starts with http/https), use it as-is
+              // Otherwise, prepend the Strapi API URL for relative paths
+              imageUrl = imageData.url.startsWith('http')
+                ? imageData.url
+                : `${STRAPI_API_URL}${imageData.url}`;
+            }
+
             content[techniqueId] = {
               title: attributes?.title || attributes?.label || 'Papírtechnika',
               description: attributes?.description || attributes?.desctiption || attributes?.desciption || '',
-              image: imageData?.url
-                ? `${STRAPI_API_URL}${imageData.url}`
-                : '/images/img_placeholder_image_536x536.png',
+              image: imageUrl,
             };
           });
           setTechniquesContent(content);

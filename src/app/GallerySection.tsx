@@ -81,11 +81,20 @@ export default function GallerySection() {
           const images = response.data.map((item) => {
             const attributes = item.attributes ?? item;
             const imageData = getImageAttributes(attributes?.image ?? null);
+
+            // Build the correct image URL
+            let imageUrl = '/images/img_placeholder_image_404x404.png';
+            if (imageData?.url) {
+              // If URL is already absolute (starts with http/https), use it as-is
+              // Otherwise, prepend the Strapi API URL for relative paths
+              imageUrl = imageData.url.startsWith('http')
+                ? imageData.url
+                : `${STRAPI_API_URL}${imageData.url}`;
+            }
+
             return {
               id: item.id,
-              src: imageData?.url
-                ? `${STRAPI_API_URL}${imageData.url}`
-                : '/images/img_placeholder_image_404x404.png',
+              src: imageUrl,
               width: imageData?.width || 404,
               height: imageData?.height || 404,
               alt: attributes?.alt || 'Gallery image',

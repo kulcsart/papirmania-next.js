@@ -7,8 +7,6 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
-    domains: ['strapicms.fly.dev', 'pub-bf0bb2bde95c4695afcb00fdfac07418.r2.dev'],
     remotePatterns: [
       {
         protocol: 'http',
@@ -18,10 +16,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'strapicms.fly.dev',
-      },
-      {
-        protocol: 'https',
-        hostname: 'pub-bf0bb2bde95c4695afcb00fdfac07418.r2.dev',
       },
     ],
   },
