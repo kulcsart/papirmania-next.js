@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 import { motion } from 'framer-motion';
 import RatingBar from'../components/ui/RatingBar';
 import { useTemplate } from '../components/providers/TemplateProvider';
@@ -120,15 +119,13 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                         
                         {/* Rating */}
                         {testimonial.id === 'testimonial-3' ? (
-                          <Image
+                          <img
                             src="/images/img_stars.svg"
-                            width={116}
-                            height={18}
                             alt="5 star rating"
                             className="w-[20%] h-auto"
                           />
                         ) : (
-                          <RatingBar 
+                          <RatingBar
                             rating={testimonial.rating}
                             readonly
                             layout_width="auto"

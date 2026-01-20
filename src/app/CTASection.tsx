@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 import Button from'../components/ui/Button';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
@@ -64,10 +63,8 @@ export default function CTASection() {
 
             {/* Right Image */}
             <div className="w-full lg:w-[38%] mt-8 lg:mt-0 flex justify-center">
-              <Image
+              <img
                 src="/images/img_placeholder_image_374x364.png"
-                width={516}
-                height={286}
                 alt="Creative workshop session"
                 className="w-full max-w-[516px] h-[286px] rounded-[16px] self-center"
               />

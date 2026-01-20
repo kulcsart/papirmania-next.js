@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 
 const Footer = () => {
   const socialLinks = [
@@ -42,10 +41,8 @@ const Footer = () => {
               
               {/* Logo */}
               <div className="flex justify-center lg:justify-start">
-                <Image
+                <img
                   src="/images/img_footer_logo.png"
-                  width={84}
-                  height={84}
                   alt="Papírmánia Footer Logo"
                   className="w-[64px] h-[64px] sm:w-[74px] sm:h-[74px] lg:w-[84px] lg:h-[84px]"
                 />
@@ -57,10 +54,8 @@ const Footer = () => {
                   
                   {/* Phone */}
                   <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
-                    <Image
+                    <img
                       src="/images/img_lucide_phone.svg"
-                      width={24}
-                      height={24}
                       alt="Phone"
                       className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
                     />
@@ -71,14 +66,12 @@ const Footer = () => {
 
                   {/* Email */}
                   <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
-                    <Image
+                    <img
                       src="/images/img_lucide_send.svg"
-                      width={24}
-                      height={24}
                       alt="Email"
                       className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
                     />
-                    <a 
+                    <a
                       href="mailto:info@papirmania.hu"
                       className="text-text-muted font-normal text-xs sm:text-sm lg:text-xs leading-xs underline hover:text-white transition-colors duration-200 text-center lg:text-left"
                       style={{ fontFamily: 'DM Sans' }}
@@ -100,10 +93,8 @@ const Footer = () => {
                     className="transition-transform duration-200 hover:scale-110"
                     aria-label={social?.alt}
                   >
-                    <Image
+                    <img
                       src={social?.src}
-                      width={24}
-                      height={24}
                       alt={social?.alt}
                       className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
                     />

@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 import { motion } from 'framer-motion';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
@@ -74,14 +73,14 @@ export default function AboutSection() {
               </motion.div>
 
               {/* Right Image */}
-              <motion.div 
+              <motion.div
                 className="relative w-full lg:w-[48%] h-[312px] sm:h-[468px] lg:h-[624px]"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                
+
                 {/* Main Image */}
                 <motion.div
                   initial={{ scale: 0.9 }}
@@ -89,15 +88,13 @@ export default function AboutSection() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Image
+                  <img
                     src="/images/img_placeholder_image.png"
-                    width={516}
-                    height={532}
                     alt="About the artist - paper crafts creator"
                     className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[16px] z-10"
                   />
                 </motion.div>
-                
+
                 {/* Secondary Image */}
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -105,10 +102,8 @@ export default function AboutSection() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <Image
+                  <img
                     src="/images/img_placeholder_image_374x364.png"
-                    width={364}
-                    height={374}
                     alt="Paper art collection"
                     className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[16px] z-20"
                   />

@@ -1,5 +1,4 @@
 'use client';
-import Image from'next/image';
 import Button from'../components/ui/Button';
 import { motion } from 'framer-motion';
 import { useTemplate } from '../components/providers/TemplateProvider';
@@ -96,26 +95,22 @@ export default function HeroSection() {
               </motion.div>
 
               {/* Right Images Stack */}
-              <motion.div 
+              <motion.div
                 className="relative w-full lg:w-[48%] h-[312px] sm:h-[468px] lg:h-[624px] justify-end items-end"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 {/* Main Image */}
-                <Image
+                <img
                   src="/images/img_placeholder_image.png"
-                  width={516}
-                  height={532}
                   alt="Paper crafts workshop"
                   className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[16px] z-10"
                 />
-                
+
                 {/* Secondary Image */}
-                <Image
+                <img
                   src="/images/img_placeholder_image_374x364.png"
-                  width={364}
-                  height={374}
                   alt="Handmade paper art"
                   className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[16px] z-20"
                 />
