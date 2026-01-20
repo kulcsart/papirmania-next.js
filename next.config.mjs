@@ -5,6 +5,20 @@ const nextConfig = {
 
   typescript: {
     ignoreBuildErrors: true,
-  }
+  },
+  images: {
+    domains: ['strapicms.fly.dev'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+      },
+      {
+        protocol: 'https',
+        hostname: 'strapicms.fly.dev',
+      },
+    ],
+  },
 };
 export default nextConfig;
