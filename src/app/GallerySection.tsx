@@ -180,8 +180,6 @@ export default function GallerySection() {
                 >
                   <img
                     src={image.src}
-                    width={image.width}
-                    height={image.height}
                     alt={image.alt}
                     className="w-full h-auto rounded-[16px]"
                     loading="lazy"
