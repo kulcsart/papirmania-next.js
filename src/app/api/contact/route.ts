@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // Send email using Resend
     await resend.emails.send({
-      from: 'Papirmania weboldal <onboarding@resend.dev>',
+      from: 'Papírmania Weboldal <noreply@papirmania.hu>',
       to: 'darmos.marianna@gmail.com',
       subject: `Új üzenet: ${name}`,
       html: `
