@@ -68,6 +68,25 @@ class StrapiService {
       populate: '*',
     });
   }
+
+  // Fetch pages from Page Papírmania
+  async getPagesPapirmania() {
+    return this.get<import('../types/strapi.types').StrapiPagesResponse>('/pages-papirmania', {
+      populate: '*',
+    });
+  }
+
+  // Fetch single page by tag from Page Papírmania
+  async getPagePapimaniaByTag(tag: string) {
+    return this.get<import('../types/strapi.types').StrapiPagesResponse>('/pages-papirmania', {
+      populate: '*',
+      filters: {
+        tag: {
+          $eq: tag,
+        },
+      },
+    });
+  }
 }
 
 export const strapiService = new StrapiService();

@@ -1,9 +1,4 @@
 {
-  "images": {
-    "unoptimized": true,
-    "domains": [],
-    "remotePatterns": []
-  },
   "functions": {
     "pages/api/**": {
       "maxDuration": 10

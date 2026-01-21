@@ -3,7 +3,12 @@ import Button from'../components/ui/Button';
 import { motion } from 'framer-motion';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  title?: string;
+  content?: string;
+}
+
+export default function HeroSection({ title, content }: HeroSectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -48,7 +53,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Ismerd meg a papír titkait
+                  {title || 'Ismerd meg a papír titkait'}
                 </motion.h1>
 
                 {/* Content Column */}
@@ -64,7 +69,7 @@ export default function HeroSection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                   >
-                    Számomra a papír nemcsak egy alapanyag, hanem a kreativitás végtelen forrása. Szeretem a papírt, szeretek új életet adni a már nem használt anyagoknak.
+                    {content || 'Számomra a papír nemcsak egy alapanyag, hanem a kreativitás végtelen forrása. Szeretem a papírt, szeretek új életet adni a már nem használt anyagoknak.'}
                   </motion.p>
 
                   {/* Action Buttons */}

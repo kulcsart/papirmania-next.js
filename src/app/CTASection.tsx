@@ -2,7 +2,12 @@
 import Button from'../components/ui/Button';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
-export default function CTASection() {
+interface CTASectionProps {
+  title?: string;
+  content?: string;
+}
+
+export default function CTASection({ title, content }: CTASectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -34,7 +39,7 @@ export default function CTASection() {
                     marginBlockEnd: '40px'
                   }}
                 >
-                  Alkossunk együtt
+                  {title || 'Alkossunk együtt'}
                 </h2>
               
                 <p 
@@ -43,7 +48,7 @@ export default function CTASection() {
                   }`}
                   style={{ fontFamily: 'DM Sans' }}
                 >
-                  Ne maradj le a következő alkalomról. Tanulj kézműves technikákat, óvd a környezetet kreatívan
+                  {content || 'Ne maradj le a következő alkalomról. Tanulj kézműves technikákat, óvd a környezetet kreatívan'}
                 </p>
               </div>
             

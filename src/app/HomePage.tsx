@@ -14,6 +14,7 @@ import strapiService from '../services/strapi.service';
 import type {
   StrapiCoursesResponse,
   StrapiTestimonialsResponse,
+  StrapiPagesResponse,
   StrapiImage,
   StrapiImageData,
 } from '../types/strapi.types';
@@ -36,9 +37,16 @@ interface TestimonialData {
   avatar: string;
 }
 
+interface PageContent {
+  hero: { title: string; content: string };
+  about: { title: string; content: string };
+  cta: { title: string; content: string };
+}
+
 export default function HomePage() {
   const [courses, setCourses] = useState<Course[]>([])
   const [testimonials, setTestimonials] = useState<TestimonialData[]>([])
+  const [pageContent, setPageContent] = useState<PageContent | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
   const getImageAttributes = (image?: StrapiImage | StrapiImageData | null) => {
@@ -82,6 +90,29 @@ export default function HomePage() {
               ? `${STRAPI_API_URL}${mediaData.url}`
               : '/images/img_avatar_image.png',
           };
+        });
+
+        // Fetch page content from Page Papírmania
+        const pagesResponse: StrapiPagesResponse = await strapiService.getPagesPapirmania();
+        const pages = pagesResponse.data;
+
+        const heroPage = pages.find(p => (p.attributes?.tag || p.tag) === 'bevezetes');
+        const aboutPage = pages.find(p => (p.attributes?.tag || p.tag) === 'rolam');
+        const ctaPage = pages.find(p => (p.attributes?.tag || p.tag) === 'alkossunk-egyutt');
+
+        setPageContent({
+          hero: {
+            title: (heroPage?.attributes?.title || heroPage?.title) ?? 'Kézművesség Papírból',
+            content: (heroPage?.attributes?.content || heroPage?.content) ?? 'Fedezd fel a papírművészet varázsát'
+          },
+          about: {
+            title: (aboutPage?.attributes?.title || aboutPage?.title) ?? 'Rólam',
+            content: (aboutPage?.attributes?.content || aboutPage?.content) ?? ''
+          },
+          cta: {
+            title: (ctaPage?.attributes?.title || ctaPage?.title) ?? 'Alkossunk együtt',
+            content: (ctaPage?.attributes?.content || ctaPage?.content) ?? ''
+          }
         });
 
         setCourses(coursesData);
@@ -174,15 +205,24 @@ export default function HomePage() {
   return (
     <main className="w-full bg-[#3b3935]">
       <Header />
-      
+
       <div className="flex flex-col justify-start items-center w-full">
-        <HeroSection />
+        <HeroSection
+          title={pageContent?.hero.title}
+          content={pageContent?.hero.content}
+        />
         <CoursesSection courses={courses} loading={loading} />
         <TechniquesSection />
-        <AboutSection />
+        <AboutSection
+          title={pageContent?.about.title}
+          content={pageContent?.about.content}
+        />
         <GallerySection />
         <TestimonialsSection testimonials={testimonials} loading={loading} />
-        <CTASection />
+        <CTASection
+          title={pageContent?.cta.title}
+          content={pageContent?.cta.content}
+        />
         <ContactSection />
       </div>
 

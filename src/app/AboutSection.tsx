@@ -2,7 +2,12 @@
 import { motion } from 'framer-motion';
 import { useTemplate } from '../components/providers/TemplateProvider';
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  title?: string;
+  content?: string;
+}
+
+export default function AboutSection({ title, content }: AboutSectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -49,7 +54,7 @@ export default function AboutSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                   >
-                    Én és a papír
+                    {title || 'Én és a papír'}
                   </motion.h2>
                 </div>
 
@@ -63,13 +68,10 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  Történetem a papír és a textil iránti gyermekkori rajongással indult. A barkácsolás, a kézműveskedés már akkor is az életem része volt, és ez a lelkesedés a felnőttkoromra sem tűnt el – sőt, egyre erősebb lett!
-                  <br /><br />
-                  Az évek során számos technikával megismerkedtem a varrástól, szövésen át egészen a kárpitozasig, a decoupage-ig és a falfestésig. Ez a kísérletezés máig tart, szívesen tanulok újabb és újabb technikákat. Bár sok területet szeretek, az igazi hívást a könyvkötés és a dobozkészítés jelentette.
-                  <br /><br />
-                  Lakberendezőként a hivatásomban is a papír és a textil a főszereplők. Szakterületem a tapéták és a lakástextiliák. A sok gyönyörű anyag, és textúra amivel nap mint nap dolgozom, folyamatosan inspirál a kézműveskedésre. Ez a két része az életemnek mára elválaszthatatlanul összefonódott, ebből született a Papírmánia.
-                </motion.p>
+                  dangerouslySetInnerHTML={{
+                    __html: (content || 'Történetem a papír és a textil iránti gyermekkori rajongással indult...').replace(/\n/g, '<br /><br />')
+                  }}
+                />
               </motion.div>
 
               {/* Right Image */}

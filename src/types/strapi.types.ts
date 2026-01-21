@@ -147,3 +147,41 @@ export interface StrapiTechniquesResponse {
     };
   };
 }
+
+// Page Papírmania Types
+export interface StrapiPagePapirmaniaAttributes {
+  title: string;
+  tag: string;
+  slug?: string;
+  content: string;
+  TwoButtonCTA?: any;
+  page_image_large?: StrapiImageData | StrapiImage;
+  page_image_small?: StrapiImageData | StrapiImage;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface StrapiPagePapirmania {
+  id: number;
+  attributes?: StrapiPagePapirmaniaAttributes;
+  title?: string;
+  tag?: string;
+  slug?: string;
+  content?: string;
+  TwoButtonCTA?: any;
+  page_image_large?: StrapiImageData | StrapiImage;
+  page_image_small?: StrapiImageData | StrapiImage;
+}
+
+export interface StrapiPagesResponse {
+  data: StrapiPagePapirmania[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
