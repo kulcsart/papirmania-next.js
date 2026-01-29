@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Header from'../components/common/Header';
 import Footer from'../components/common/Footer';
 import HeroSection from'./HeroSection';
@@ -212,7 +212,9 @@ export default function HomePage() {
           content={pageContent?.hero.content}
         />
         <CoursesSection courses={courses} loading={loading} />
-        <TechniquesSection />
+        <Suspense fallback={null}>
+          <TechniquesSection />
+        </Suspense>
         <AboutSection
           title={pageContent?.about.title}
           content={pageContent?.about.content}
