@@ -83,7 +83,7 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
               </motion.div>
 
             {/* Courses Grid - 2 columns, equal height rows */}
-            <div className="grid grid-cols-2 gap-[20px] w-full auto-rows-fr">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[20px] w-full auto-rows-fr">
               
               {/* Learn More Card - fixed first cell */}
               <div
