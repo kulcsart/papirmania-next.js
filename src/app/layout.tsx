@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/index.css';
 import TemplateProvider from '../components/providers/TemplateProvider';
+import AgentationProvider from '../components/AgentationProvider';
 
 export const viewport = {
   width: 'device-width',
@@ -39,6 +40,7 @@ export default function RootLayout({
 </head>
       <body>
         <TemplateProvider>{children}</TemplateProvider>
+        <AgentationProvider />
       </body>
     </html>
   );

@@ -59,19 +59,28 @@ export default function AboutSection({ title, content }: AboutSectionProps) {
                 </div>
 
                 {/* About Text */}
-                <motion.p
-                  className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left w-full ${
-                    isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans' }}
+                <motion.div
+                  className="flex flex-col gap-[24px] w-full"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  dangerouslySetInnerHTML={{
-                    __html: (content || 'Történetem a papír és a textil iránti gyermekkori rajongással indult...').replace(/\n/g, '<br /><br />')
-                  }}
-                />
+                >
+                  {(content || 'Történetem a papír és a textil iránti gyermekkori rajongással indult...')
+                    .split(/\n\s*\n/)
+                    .map((paragraph, index) => (
+                      <p
+                        key={`about-paragraph-${index}`}
+                        className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left w-full ${
+                          isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
+                        }`}
+                        style={{ fontFamily: 'DM Sans' }}
+                        dangerouslySetInnerHTML={{
+                          __html: paragraph.replace(/\n/g, '<br />')
+                        }}
+                      />
+                    ))}
+                </motion.div>
               </motion.div>
 
               {/* Right Image */}

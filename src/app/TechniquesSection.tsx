@@ -1,11 +1,10 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import strapiService from '../services/strapi.service';
 import type { StrapiTechniquesResponse, StrapiImage, StrapiImageData } from '../types/strapi.types';
 import { useTemplate } from '../components/providers/TemplateProvider';
-
-type TechniqueType = 'cartonnage' | 'bookbinding' | 'boxes' | 'marble' | 'papermache';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface TechniqueContent {
   title: string;
@@ -13,36 +12,35 @@ interface TechniqueContent {
   image: string;
 }
 
+interface TechniqueTab {
+  id: string;
+  label: string;
+  slug?: string;
+}
+
 export default function TechniquesSection() {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
-  const [activeTechnique, setActiveTechnique] = useState<TechniqueType>('cartonnage')
-  const [techniquesContent, setTechniquesContent] = useState<Record<string, TechniqueContent>>({
-    cartonnage: {
-      title: 'Kartonból készült tárgyak borítása',
-      description: 'Megtanítom, hogyan lehet papírral vagy textillel borítani a kartonból készült tárgyakat. Egyszerű, de hatásos technika, amely szép eredményt ad.',
-      image: '/images/img_placeholder_image_536x536.png'
-    }
-  });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [activeTechnique, setActiveTechnique] = useState<string>('');
+  const [techniques, setTechniques] = useState<TechniqueTab[]>([]);
+  const [techniquesContent, setTechniquesContent] = useState<Record<string, TechniqueContent>>({});
 
-  const techniques = [
-    { id: 'cartonnage' as TechniqueType, label: 'Cartonnage' },
-    { id: 'bookbinding' as TechniqueType, label: 'Könyvkötés' },
-    { id: 'boxes' as TechniqueType, label: 'Dobozkészítés' },
-    { id: 'marble' as TechniqueType, label: 'Márványpapír' },
-    { id: 'papermache' as TechniqueType, label: 'Papírmasé' },
-  ]
+  const searchSlug = useMemo(() => searchParams?.get('tech')?.toString() ?? '', [searchParams]);
 
-  const resolveTechniqueId = (label?: string) => {
-    if (!label) return null;
-    const normalized = label.toLowerCase();
-    if (normalized.includes('cartonnage')) return 'cartonnage';
-    if (normalized.includes('könyvköt') || normalized.includes('konyvkot')) return 'bookbinding';
-    if (normalized.includes('doboz')) return 'boxes';
-    if (normalized.includes('márvány') || normalized.includes('marvany')) return 'marble';
-    if (normalized.includes('papírmas') || normalized.includes('papirmas')) return 'papermache';
-    return null;
-  }
+  // Fallback slug generator if Strapi record has no slug
+  const slugify = (value?: string) => {
+    if (!value) return '';
+    return value
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  };
 
   const getImageAttributes = (image?: StrapiImage | StrapiImageData | null) => {
     if (!image) return null;
@@ -60,9 +58,14 @@ export default function TechniquesSection() {
         
         if (response.data && response.data.length > 0) {
           const content: Record<string, TechniqueContent> = {};
+          const tabs: TechniqueTab[] = [];
+
           response.data.forEach((technique) => {
             const attributes = technique.attributes ?? technique;
-            const techniqueId = attributes?.slug || resolveTechniqueId(attributes?.label);
+            const label = attributes?.label || attributes?.title || '';
+            if (!label) return;
+            const slug = attributes?.slug || slugify(label);
+            const techniqueId = slug || label;
             const imageData = getImageAttributes(attributes?.image ?? null);
             if (!techniqueId) return;
 
@@ -81,8 +84,24 @@ export default function TechniquesSection() {
               description: attributes?.description || attributes?.desctiption || attributes?.desciption || '',
               image: imageUrl,
             };
+
+            tabs.push({
+              id: techniqueId,
+              label,
+              slug: attributes?.slug || slug || undefined,
+            });
           });
+
+          // Tabs ordered alphabetically by label (Hungarian locale)
+          tabs.sort((a, b) => a.label.localeCompare(b.label, 'hu', { sensitivity: 'base' }));
           setTechniquesContent(content);
+          setTechniques(tabs);
+
+          // Initial selection: URL query (?tech=slug) or first item
+          const initial = searchSlug && content[searchSlug] ? searchSlug : tabs[0]?.id || '';
+          if (initial) {
+            setActiveTechnique(initial);
+          }
         }
       } catch (error) {
         console.error('Error loading techniques from Strapi:', error);
@@ -93,8 +112,20 @@ export default function TechniquesSection() {
     loadTechniquesData();
   }, []);
 
-  const handleTechniqueClick = (techniqueId: TechniqueType) => {
-    setActiveTechnique(techniqueId)
+  useEffect(() => {
+    if (searchSlug && techniquesContent[searchSlug]) {
+      setActiveTechnique(searchSlug);
+    }
+  }, [searchSlug, techniquesContent]);
+
+  const handleTechniqueClick = (techniqueId: string, slug?: string) => {
+    setActiveTechnique(techniqueId);
+    if (slug) {
+      // Keep selection in the URL for sharing/bookmarking
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set('tech', slug);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
   }
 
   const getTechniqueContent = () => {
@@ -147,7 +178,7 @@ export default function TechniquesSection() {
                     fontFamily: 'Maname',
                     textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                     marginBlockStart: '0px',
-                    marginBlockEnd: '40px'
+                    marginBlockEnd: '12px'
                   }}
                 >
                   A papírművészet technikái
@@ -175,10 +206,12 @@ export default function TechniquesSection() {
                     : 'bg-[#14141466] border-[#77736b]'
                 }`}
               >
-                {techniques.map((technique, index) => (
+                {techniques.map((technique, index) => {
+                  const isLast = index === techniques.length - 1;
+                  return (
                   <motion.button
                     key={technique.id}
-                    onClick={() => handleTechniqueClick(technique.id)}
+                    onClick={() => handleTechniqueClick(technique.id, technique.slug)}
                     className={`w-full lg:flex-1 transition-all duration-200 text-[20px] sm:text-[23px] lg:text-[26px] leading-[26px] sm:leading-[29px] lg:leading-[32px] pt-[12px] pb-[24px] px-[20px] flex items-center justify-center ${
                       activeTechnique === technique.id
                         ? isLightTemplate
@@ -188,7 +221,7 @@ export default function TechniquesSection() {
                         ? 'text-[#77736b]'
                         : 'text-[#77736b]'
                     } ${
-                      technique.id !== 'papermache'
+                      !isLast
                         ? isLightTemplate
                           ? 'border-r border-[#c8c1b4]'
                           : 'border-r border-[#575252]'
@@ -209,7 +242,8 @@ export default function TechniquesSection() {
                   >
                     {technique.label}
                   </motion.button>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Technique Content */}

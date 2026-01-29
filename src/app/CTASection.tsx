@@ -36,7 +36,7 @@ export default function CTASection({ title, content }: CTASectionProps) {
                     fontFamily: 'Maname',
                     textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                     marginBlockStart: '0px',
-                    marginBlockEnd: '40px'
+                    marginBlockEnd: '12px'
                   }}
                 >
                   {title || 'Alkossunk együtt'}
@@ -71,7 +71,7 @@ export default function CTASection({ title, content }: CTASectionProps) {
               <img
                 src="/images/img_placeholder_image_374x364.png"
                 alt="Creative workshop session"
-                className="w-full max-w-[516px] h-[286px] rounded-[16px] self-center"
+                className="w-full max-w-[516px] h-auto rounded-[16px] self-center"
               />
             </div>
           </div>

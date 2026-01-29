@@ -66,7 +66,7 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
                   fontFamily: 'Maname',
                   textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                   marginBlockStart: '0px',
-                  marginBlockEnd: '40px'
+                  marginBlockEnd: '12px'
                 }}
               >
                 Kézműves kurzusok
