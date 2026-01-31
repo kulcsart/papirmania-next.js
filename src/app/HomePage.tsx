@@ -25,6 +25,7 @@ interface Course {
   price: string;
   description: string;
   features: string[];
+  registrationUrl?: string;
 }
 
 interface TestimonialData {
@@ -38,9 +39,28 @@ interface TestimonialData {
 }
 
 interface PageContent {
-  hero: { title: string; content: string };
-  about: { title: string; content: string };
-  cta: { title: string; content: string };
+  hero: {
+    title: string;
+    content: string;
+    imageLarge?: string;
+    imageSmall?: string;
+  };
+  about: {
+    title: string;
+    content: string;
+    imageLarge?: string;
+    imageSmall?: string;
+  };
+  cta: {
+    title: string;
+    content: string;
+    imageLarge?: string;
+  };
+  learnMore?: {
+    subtitle: string;
+    title: string;
+    content: string;
+  };
 }
 
 export default function HomePage() {
@@ -70,6 +90,7 @@ export default function HomePage() {
             price: attributes?.price ?? '',
             description: attributes?.description ?? '',
             features: attributes?.features || [],
+            registrationUrl: attributes?.registrationUrl,
           };
         });
 
@@ -99,20 +120,39 @@ export default function HomePage() {
         const heroPage = pages.find(p => (p.attributes?.tag || p.tag) === 'bevezetes');
         const aboutPage = pages.find(p => (p.attributes?.tag || p.tag) === 'rolam');
         const ctaPage = pages.find(p => (p.attributes?.tag || p.tag) === 'alkossunk-egyutt');
+        const learnMorePage = pages.find(p => (p.attributes?.tag || p.tag) === 'mirol-tanulhatsz');
+
+        const getImageUrl = (imageData: StrapiImageData | StrapiImage | null | undefined) => {
+          const imgAttrs = getImageAttributes(imageData);
+          if (!imgAttrs?.url) return undefined;
+          return imgAttrs.url.startsWith('http')
+            ? imgAttrs.url
+            : `${STRAPI_API_URL}${imgAttrs.url}`;
+        };
 
         setPageContent({
           hero: {
             title: (heroPage?.attributes?.title || heroPage?.title) ?? 'Kézművesség Papírból',
-            content: (heroPage?.attributes?.content || heroPage?.content) ?? 'Fedezd fel a papírművészet varázsát'
+            content: (heroPage?.attributes?.content || heroPage?.content) ?? 'Fedezd fel a papírművészet varázsát',
+            imageLarge: getImageUrl(heroPage?.attributes?.page_image_large || heroPage?.page_image_large),
+            imageSmall: getImageUrl(heroPage?.attributes?.page_image_small || heroPage?.page_image_small),
           },
           about: {
             title: (aboutPage?.attributes?.title || aboutPage?.title) ?? 'Rólam',
-            content: (aboutPage?.attributes?.content || aboutPage?.content) ?? ''
+            content: (aboutPage?.attributes?.content || aboutPage?.content) ?? '',
+            imageLarge: getImageUrl(aboutPage?.attributes?.page_image_large || aboutPage?.page_image_large),
+            imageSmall: getImageUrl(aboutPage?.attributes?.page_image_small || aboutPage?.page_image_small),
           },
           cta: {
             title: (ctaPage?.attributes?.title || ctaPage?.title) ?? 'Alkossunk együtt',
-            content: (ctaPage?.attributes?.content || ctaPage?.content) ?? ''
-          }
+            content: (ctaPage?.attributes?.content || ctaPage?.content) ?? '',
+            imageLarge: getImageUrl(ctaPage?.attributes?.page_image_large || ctaPage?.page_image_large),
+          },
+          learnMore: learnMorePage ? {
+            subtitle: (learnMorePage?.attributes?.subtitle || learnMorePage?.subtitle) ?? 'Újrahasznosítás',
+            title: (learnMorePage?.attributes?.title || learnMorePage?.title) ?? 'Miről tanulhatsz?',
+            content: (learnMorePage?.attributes?.content || learnMorePage?.content) ?? 'Döntsd el, hogy mit szeretnél megtanulni. Cartonnage, könyvkötés, dobozkészítés vagy valami más?',
+          } : undefined,
         });
 
         setCourses(coursesData);
@@ -210,20 +250,29 @@ export default function HomePage() {
         <HeroSection
           title={pageContent?.hero.title}
           content={pageContent?.hero.content}
+          imageLarge={pageContent?.hero.imageLarge}
+          imageSmall={pageContent?.hero.imageSmall}
         />
-        <CoursesSection courses={courses} loading={loading} />
+        <CoursesSection
+          courses={courses}
+          loading={loading}
+          learnMoreContent={pageContent?.learnMore}
+        />
         <Suspense fallback={null}>
           <TechniquesSection />
         </Suspense>
         <AboutSection
           title={pageContent?.about.title}
           content={pageContent?.about.content}
+          imageLarge={pageContent?.about.imageLarge}
+          imageSmall={pageContent?.about.imageSmall}
         />
         <GallerySection />
         <TestimonialsSection testimonials={testimonials} loading={loading} />
         <CTASection
           title={pageContent?.cta.title}
           content={pageContent?.cta.content}
+          imageLarge={pageContent?.cta.imageLarge}
         />
         <ContactSection />
       </div>

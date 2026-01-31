@@ -6,9 +6,11 @@ import { useTemplate } from '../components/providers/TemplateProvider';
 interface HeroSectionProps {
   title?: string;
   content?: string;
+  imageLarge?: string;
+  imageSmall?: string;
 }
 
-export default function HeroSection({ title, content }: HeroSectionProps) {
+export default function HeroSection({ title, content, imageLarge, imageSmall }: HeroSectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -29,23 +31,23 @@ export default function HeroSection({ title, content }: HeroSectionProps) {
     >
       <div className="w-full">
         <div className="flex flex-col lg:flex-row justify-start items-center w-full">
-          <div className="w-full max-w-content mx-auto px-[40px] sm:px-[60px] lg:px-[80px] py-[56px] sm:py-[84px] lg:py-[112px]">
-            <div className="flex flex-col lg:flex-row justify-between items-center w-full gap-8 lg:gap-12">
+          <div className="w-full max-w-content mx-auto px-[24px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[40px] sm:py-[56px] md:py-[84px] lg:py-[112px]">
+            <div className="flex flex-col-reverse lg:flex-row justify-between items-center w-full gap-[60px] sm:gap-[60px] lg:gap-12">
               
               {/* Left Content */}
-              <motion.div 
-                className="flex flex-col gap-[36px] sm:gap-[54px] lg:gap-[72px] justify-start items-start w-full lg:w-[48%]"
+              <motion.div
+                className="flex flex-col gap-[40px] sm:gap-[48px] md:gap-[54px] lg:gap-[72px] justify-start items-start w-full lg:w-[48%]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
               >
                 
                 {/* Main Heading */}
-                <motion.h1 
-                  className={`text-[42px] sm:text-[63px] md:text-[74px] lg:text-[84px] font-normal leading-[110%] text-left ${
+                <motion.h1
+                  className={`text-[36px] sm:text-[48px] md:text-[63px] lg:text-[74px] xl:text-[84px] font-normal leading-[110%] text-left ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
-                  style={{ 
+                  style={{
                     fontFamily: 'Maname',
                     letterSpacing: '0px'
                   }}
@@ -57,11 +59,11 @@ export default function HeroSection({ title, content }: HeroSectionProps) {
                 </motion.h1>
 
                 {/* Content Column */}
-                <div className="flex flex-col gap-[36px] sm:gap-[54px] lg:gap-[72px] justify-start items-start w-full">
+                <div className="flex flex-col gap-[24px] sm:gap-[36px] md:gap-[54px] lg:gap-[72px] justify-start items-start w-full">
                   
                   {/* Description */}
-                  <motion.p 
-                    className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left w-full ${
+                  <motion.p
+                    className={`text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] font-normal leading-[160%] text-left w-full ${
                       isLightTemplate ? 'text-[#575252]' : 'text-white'
                     }`}
                     style={{ fontFamily: 'DM Sans' }}
@@ -101,23 +103,23 @@ export default function HeroSection({ title, content }: HeroSectionProps) {
 
               {/* Right Images Stack */}
               <motion.div
-                className="relative w-full lg:w-[48%] h-[312px] sm:h-[468px] lg:h-[624px] justify-end items-end"
+                className="relative w-full lg:w-[48%] h-[280px] sm:h-[360px] md:h-[468px] lg:h-[624px] justify-end items-end"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 {/* Main Image */}
                 <img
-                  src="/images/img_placeholder_image.png"
+                  src={imageLarge || "/images/img_placeholder_image.png"}
                   alt="Paper crafts workshop"
-                  className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[16px] z-10"
+                  className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-10 shadow-lg"
                 />
 
                 {/* Secondary Image */}
                 <img
-                  src="/images/img_placeholder_image_374x364.png"
+                  src={imageSmall || "/images/img_placeholder_image_374x364.png"}
                   alt="Handmade paper art"
-                  className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[16px] z-20"
+                  className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-20 shadow-lg"
                 />
               </motion.div>
             </div>

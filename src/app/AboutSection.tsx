@@ -5,9 +5,11 @@ import { useTemplate } from '../components/providers/TemplateProvider';
 interface AboutSectionProps {
   title?: string;
   content?: string;
+  imageLarge?: string;
+  imageSmall?: string;
 }
 
-export default function AboutSection({ title, content }: AboutSectionProps) {
+export default function AboutSection({ title, content, imageLarge, imageSmall }: AboutSectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -100,7 +102,7 @@ export default function AboutSection({ title, content }: AboutSectionProps) {
                   transition={{ duration: 0.6 }}
                 >
                   <img
-                    src="/images/img_placeholder_image.png"
+                    src={imageLarge || "/images/img_placeholder_image.png"}
                     alt="About the artist - paper crafts creator"
                     className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[16px] z-10"
                   />
@@ -114,7 +116,7 @@ export default function AboutSection({ title, content }: AboutSectionProps) {
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
                   <img
-                    src="/images/img_placeholder_image_374x364.png"
+                    src={imageSmall || "/images/img_placeholder_image_374x364.png"}
                     alt="Paper art collection"
                     className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[16px] z-20"
                   />

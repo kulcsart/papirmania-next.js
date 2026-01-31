@@ -11,14 +11,22 @@ interface Course {
   price: string;
   description: string;
   features: string[];
+  registrationUrl?: string;
+}
+
+interface LearnMoreContent {
+  subtitle: string;
+  title: string;
+  content: string;
 }
 
 interface CoursesSectionProps {
   courses: Course[];
   loading: boolean;
+  learnMoreContent?: LearnMoreContent;
 }
 
-export default function CoursesSection({ courses, loading }: CoursesSectionProps) {
+export default function CoursesSection({ courses, loading, learnMoreContent }: CoursesSectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -29,8 +37,13 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
     }
   }
 
-  const handleJoinWorkshopClick = (courseId: string) => {
-    // Handle join workshop action
+  const handleJoinWorkshopClick = (registrationUrl?: string) => {
+    if (registrationUrl) {
+      window.open(registrationUrl, '_blank');
+    } else {
+      // Fallback - scroll to techniques or show message
+      handleLearnMoreClick();
+    }
   }
 
   return (
@@ -83,7 +96,7 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
               </motion.div>
 
             {/* Courses Grid - 2 columns, equal height rows */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[20px] w-full auto-rows-fr">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[20px] w-full auto-rows-fr">
               
               {/* Learn More Card - fixed first cell */}
               <div
@@ -92,41 +105,41 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
                 }`}
               >
                 <div className="flex flex-col gap-[12px] sm:gap-[14px] lg:gap-[16px] justify-start items-start w-full flex-1">
-                  
-                  <span 
+
+                  <span
                     className={`text-base font-extrabold leading-[150%] text-center uppercase ${
                       isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                     }`}
                     style={{ fontFamily: 'DM Sans' }}
                   >
-                    Újrahasznosítás
+                    {learnMoreContent?.subtitle || 'Újrahasznosítás'}
                   </span>
-                  
+
                   <div className="flex flex-col gap-[16px] sm:gap-[24px] lg:gap-[32px] justify-start items-start w-full flex-1">
-                    
-                    <h3 
+
+                    <h3
                       className={`text-[24px] sm:text-[36px] lg:text-[48px] font-normal leading-[110%] text-left ${
                         isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                       }`}
-                      style={{ 
+                      style={{
                         fontFamily: 'Maname',
                         textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(73, 53, 24, 0.40)'
                       }}
                     >
-                      Miről tanulhatsz?
+                      {learnMoreContent?.title || 'Miről tanulhatsz?'}
                     </h3>
-                    
-                    <p 
+
+                    <p
                       className={`text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[160%] text-left w-full ${
                         isLightTemplate ? 'text-[#575252]' : 'text-white'
                       }`}
                       style={{ fontFamily: 'DM Sans' }}
                     >
-                      Döntsd el, hogy mit szeretnél megtanulni. Cartonnage, könyvkötés, dobozkészítés vagy valami más?
+                      {learnMoreContent?.content || 'Döntsd el, hogy mit szeretnél megtanulni. Cartonnage, könyvkötés, dobozkészítés vagy valami más?'}
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="mt-auto pt-[24px]">
                   <Button
                     text="Tudj meg többet"
@@ -215,7 +228,7 @@ export default function CoursesSection({ courses, loading }: CoursesSectionProps
                       <Button
                         text="Jelentkezem"
                         variant="secondary"
-                        onClick={() => handleJoinWorkshopClick(course.id)}
+                        onClick={() => handleJoinWorkshopClick(course.registrationUrl)}
                         className={`${
                           isLightTemplate
                             ? 'border border-[#bfb6a9] text-[#3b3935] bg-[#ffffffcc] hover:bg-white'

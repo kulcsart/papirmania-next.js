@@ -5,9 +5,10 @@ import { useTemplate } from '../components/providers/TemplateProvider';
 interface CTASectionProps {
   title?: string;
   content?: string;
+  imageLarge?: string;
 }
 
-export default function CTASection({ title, content }: CTASectionProps) {
+export default function CTASection({ title, content, imageLarge }: CTASectionProps) {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
 
@@ -25,11 +26,11 @@ export default function CTASection({ title, content }: CTASectionProps) {
           <div className="flex flex-col lg:flex-row justify-start items-center w-full max-h-[520px]">
           
             {/* Left Content */}
-            <div className="flex flex-col gap-[18px] sm:gap-[27px] lg:gap-[24px] justify-center items-start w-full lg:flex-1 mr-0 lg:mr-6">
-            
-              <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-start items-start w-full mr-0 lg:mr-6">
-                <h2 
-                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-left ${
+            <div className="flex flex-col gap-[18px] sm:gap-[27px] lg:gap-[24px] justify-center items-center lg:items-start w-full lg:flex-1 mr-0 lg:mr-6">
+
+              <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-start items-center lg:items-start w-full mr-0 lg:mr-6">
+                <h2
+                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center lg:text-left ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
                   style={{ 
@@ -42,8 +43,8 @@ export default function CTASection({ title, content }: CTASectionProps) {
                   {title || 'Alkossunk együtt'}
                 </h2>
               
-                <p 
-                  className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left w-full ${
+                <p
+                  className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-center lg:text-left w-full ${
                     isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
                   }`}
                   style={{ fontFamily: 'DM Sans' }}
@@ -69,7 +70,7 @@ export default function CTASection({ title, content }: CTASectionProps) {
             {/* Right Image */}
             <div className="w-full lg:w-[38%] mt-8 lg:mt-0 flex justify-center">
               <img
-                src="/images/img_placeholder_image_374x364.png"
+                src={imageLarge || "/images/img_placeholder_image_374x364.png"}
                 alt="Creative workshop session"
                 className="w-full max-w-[516px] h-auto rounded-[16px] self-center"
               />

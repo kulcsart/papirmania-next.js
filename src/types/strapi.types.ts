@@ -20,6 +20,7 @@ export interface StrapiCourseAttributes {
   price: string;
   description: string;
   features?: string[];
+  registrationUrl?: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -32,6 +33,7 @@ export interface StrapiCourse {
   price?: string;
   description?: string;
   features?: string[];
+  registrationUrl?: string;
 }
 
 export interface StrapiCoursesResponse {
@@ -115,6 +117,7 @@ export interface StrapiTechniqueAttributes {
   label: string;
   slug: string;
   title: string;
+  order?: number;
   description?: string;
   desctiption?: string;
   desciption?: string;
@@ -130,6 +133,7 @@ export interface StrapiTechnique {
   label?: string;
   slug?: string;
   title?: string;
+  order?: number;
   description?: string;
   desctiption?: string;
   desciption?: string;
@@ -154,6 +158,7 @@ export interface StrapiPagePapirmaniaAttributes {
   tag: string;
   slug?: string;
   content: string;
+  subtitle?: string;
   TwoButtonCTA?: any;
   page_image_large?: StrapiImageData | StrapiImage;
   page_image_small?: StrapiImageData | StrapiImage;
@@ -169,6 +174,7 @@ export interface StrapiPagePapirmania {
   tag?: string;
   slug?: string;
   content?: string;
+  subtitle?: string;
   TwoButtonCTA?: any;
   page_image_large?: StrapiImageData | StrapiImage;
   page_image_small?: StrapiImageData | StrapiImage;
