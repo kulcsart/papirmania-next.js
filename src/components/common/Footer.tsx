@@ -6,19 +6,13 @@ const Footer = () => {
       id: 'facebook',
       src: '/images/img_facebook.svg',
       alt: 'Facebook',
-      href: 'https://facebook.com/papirmania'
+      href: 'https://www.facebook.com/marianna.darmos'
     },
     {
       id: 'instagram',
       src: '/images/img_instagram.svg',
       alt: 'Instagram',
-      href: 'https://instagram.com/papirmania'
-    },
-    {
-      id: 'youtube',
-      src: '/images/img_youtube.svg',
-      alt: 'YouTube',
-      href: 'https://youtube.com/@papirmania'
+      href: 'https://www.instagram.com/papirmania/'
     }
   ]
 
@@ -51,18 +45,6 @@ const Footer = () => {
               {/* Contact Information */}
               <div className="flex-1 w-full lg:w-auto">
                 <div className="flex flex-col gap-[12px] items-center lg:items-start">
-                  
-                  {/* Phone */}
-                  <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
-                    <img
-                      src="/images/img_lucide_phone.svg"
-                      alt="Phone"
-                      className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
-                    />
-                    <span className="text-text-muted font-bold text-sm sm:text-md lg:text-sm leading-md text-center lg:text-left">
-                      +36 1 234 5678
-                    </span>
-                  </div>
 
                   {/* Email */}
                   <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
@@ -72,11 +54,41 @@ const Footer = () => {
                       className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
                     />
                     <a
-                      href="mailto:info@papirmania.hu"
+                      href="mailto:papirmaniabp@gmail.com"
                       className="text-text-muted font-normal text-xs sm:text-sm lg:text-xs leading-xs underline hover:text-white transition-colors duration-200 text-center lg:text-left"
                       style={{ fontFamily: 'DM Sans' }}
                     >
-                      info@papirmania.hu
+                      papirmaniabp@gmail.com
+                    </a>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
+                    <img
+                      src="/images/img_lucide_phone.svg"
+                      alt="Phone"
+                      className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]"
+                    />
+                    <a
+                      href="tel:+36304152930"
+                      className="text-text-muted font-normal text-xs sm:text-sm lg:text-xs leading-xs hover:text-white transition-colors duration-200 text-center lg:text-left"
+                      style={{ fontFamily: 'DM Sans' }}
+                    >
+                      06 30 415 2930
+                    </a>
+                  </div>
+
+                  {/* Workshop Link */}
+                  <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
+                    <span className="w-[20px] sm:w-[22px] lg:w-[24px]">🎨</span>
+                    <a
+                      href="https://app.minup.io/book/art-and-deco-workshop/events/ea070dad-1f09-4d2c-abf8-d302293ced12"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-text-muted font-semibold text-xs sm:text-sm lg:text-xs leading-xs underline hover:text-white transition-colors duration-200 text-center lg:text-left"
+                      style={{ fontFamily: 'DM Sans' }}
+                    >
+                      Workshop foglalás
                     </a>
                   </div>
                 </div>

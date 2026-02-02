@@ -32,22 +32,11 @@ export default function AboutSection({ title, content, imageLarge, imageSmall }:
                 transition={{ duration: 0.6 }}
               >
                 <div className="flex flex-col justify-start items-start w-full">
-                  <motion.span
-                    className="text-base font-extrabold leading-[150%] text-center uppercase mb-2"
-                    style={{ fontFamily: 'DM Sans', color: isLightTemplate ? '#3b3935' : 'var(--light, #ECE6E1)' }}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  >
-                    Rólam
-                  </motion.span>
-
                   <motion.h2
-                    className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-left ${
+                    className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[120%] text-left pb-2 ${
                       isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                     }`}
-                    style={{ 
+                    style={{
                       fontFamily: 'Maname',
                       textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)'
                     }}

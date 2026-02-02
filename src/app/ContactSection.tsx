@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../components/ui/Button';
 import EditText from '../components/ui/EditText';
@@ -7,6 +7,8 @@ import TextArea from '../components/ui/TextArea';
 import CheckBox from '../components/ui/CheckBox';
 import Modal from '../components/ui/Modal';
 import { useTemplate } from '../components/providers/TemplateProvider';
+import strapiService from '../services/strapi.service';
+import type { StrapiImage, StrapiImageData } from '../types/strapi.types';
 
 interface FormData {
   name: string;
@@ -15,9 +17,20 @@ interface FormData {
   acceptTerms: boolean;
 }
 
+interface ContactContent {
+  title: string;
+  description: string;
+  image: string;
+}
+
 export default function ContactSection() {
   const { template } = useTemplate()
   const isLightTemplate = template === 'light'
+  const [contactContent, setContactContent] = useState<ContactContent>({
+    title: 'Írj nekem',
+    description: 'Van egy ötleted vagy kérdésed a workshopokról?',
+    image: '/images/img_placeholder_image_774x516.png'
+  })
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -51,6 +64,42 @@ export default function ContactSection() {
   const closeModal = () => {
     setModal({ ...modal, isOpen: false })
   }
+
+  const getImageAttributes = (image?: StrapiImage | StrapiImageData | null) => {
+    if (!image) return null;
+    if ('data' in image) {
+      return image.data?.attributes ?? null;
+    }
+    return image;
+  };
+
+  useEffect(() => {
+    const loadContactContent = async () => {
+      try {
+        const response = await strapiService.getContactContent();
+        const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+
+        if (response.data && response.data.length > 0) {
+          const page = response.data[0];
+          const attributes = page.attributes ?? page;
+          const imageData = getImageAttributes(attributes?.image ?? null);
+
+          setContactContent({
+            title: attributes?.title || 'Írj nekem',
+            description: attributes?.content || 'Van egy ötleted vagy kérdésed a workshopokról?',
+            image: imageData?.url
+              ? `${STRAPI_API_URL}${imageData.url}`
+              : '/images/img_placeholder_image_774x516.png'
+          });
+        }
+      } catch (error) {
+        console.error('Error loading contact content from Strapi:', error);
+        // Keep default content on error
+      }
+    };
+
+    loadContactContent();
+  }, []);
 
   const handleSubmit = async () => {
     if (!formData.acceptTerms) {
@@ -118,47 +167,34 @@ export default function ContactSection() {
             
               {/* Section Header */}
               <div className="flex flex-col justify-start items-start w-full">
-                <motion.span
-                  className={`text-base font-extrabold leading-[150%] text-left uppercase ${
-                    isLightTemplate ? 'text-[#3b3935]' : 'text-[#ECE6E1]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans' }}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  Üzenet
-                </motion.span>
-              
-                <motion.div 
+                <motion.div
                   className="flex flex-col gap-[13px] sm:gap-[20px] lg:gap-[24px] justify-start items-start w-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <h2 
-                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-left ${
+                  <h2
+                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[120%] text-left pb-2 ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
-                  style={{ 
+                  style={{
                     fontFamily: 'Maname',
                     textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                     marginBlockStart: '0px',
                     marginBlockEnd: '12px'
                   }}
                 >
-                  Írj nekem
+                  {contactContent.title}
                 </h2>
-                
-                <p 
+
+                <p
                   className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left ${
                     isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
                   }`}
                   style={{ fontFamily: 'DM Sans' }}
                 >
-                  Van egy ötleted vagy kérdésed a workshopokról?
+                  {contactContent.description}
                 </p>
                 </motion.div>
               </div>
@@ -264,96 +300,19 @@ export default function ContactSection() {
               </motion.div>
             </motion.div>
 
-            {/* Right Contact Info */}
+            {/* Right Image */}
             <motion.div
-              className="w-full lg:w-[38%] mt-8 lg:mt-0 flex flex-col gap-8"
+              className="w-full lg:w-[38%] mt-8 lg:mt-0"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {/* Image */}
               <img
-                src="/images/img_placeholder_image_774x516.png"
+                src={contactContent.image}
                 alt="Contact us - paper crafts studio"
                 className="w-full h-auto rounded-[16px]"
               />
-
-              {/* Contact Details */}
-              <div className="flex flex-col gap-6">
-                <h3
-                  className={`text-[24px] sm:text-[28px] lg:text-[32px] font-normal leading-[110%] ${
-                    isLightTemplate ? 'text-[#3b3935]' : 'text-white'
-                  }`}
-                  style={{ fontFamily: 'Maname' }}
-                >
-                  Kapcsolat
-                </h3>
-
-                {/* Contact Items */}
-                <div className="flex flex-col gap-4">
-                  {/* Email */}
-                  <a
-                    href="mailto:papirmaniabp@gmail.com"
-                    className={`text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[160%] hover:underline ${
-                      isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
-                    }`}
-                    style={{ fontFamily: 'DM Sans' }}
-                  >
-                    📧 papirmaniabp@gmail.com
-                  </a>
-
-                  {/* Phone */}
-                  <a
-                    href="tel:+36304152930"
-                    className={`text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[160%] hover:underline ${
-                      isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
-                    }`}
-                    style={{ fontFamily: 'DM Sans' }}
-                  >
-                    📞 06 30 415 2930
-                  </a>
-
-                  {/* Facebook */}
-                  <a
-                    href="https://www.facebook.com/marianna.darmos"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[160%] hover:underline ${
-                      isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
-                    }`}
-                    style={{ fontFamily: 'DM Sans' }}
-                  >
-                    👤 Facebook
-                  </a>
-
-                  {/* Instagram */}
-                  <a
-                    href="https://www.instagram.com/papirmania/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[160%] hover:underline ${
-                      isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
-                    }`}
-                    style={{ fontFamily: 'DM Sans' }}
-                  >
-                    📷 Instagram
-                  </a>
-
-                  {/* Workshop Link */}
-                  <a
-                    href="https://app.minup.io/book/art-and-deco-workshop/events/ea070dad-1f09-4d2c-abf8-d302293ced12"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[160%] hover:underline mt-2 ${
-                      isLightTemplate ? 'text-[#3b3935]' : 'text-[#ece6e1]'
-                    }`}
-                    style={{ fontFamily: 'DM Sans' }}
-                  >
-                    🎨 Workshop foglalás →
-                  </a>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>

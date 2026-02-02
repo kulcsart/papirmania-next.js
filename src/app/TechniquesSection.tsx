@@ -115,16 +115,7 @@ export default function TechniquesSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-              <span
-                className={`text-base font-extrabold leading-[150%] text-center uppercase ${
-                  isLightTemplate ? 'text-[#3b3935]' : 'text-[#ECE6E1]'
-                }`}
-                style={{ fontFamily: 'DM Sans' }}
-              >
-                Technikák
-              </span>
-
-              <motion.div 
+              <motion.div
                 className="flex flex-col gap-0 justify-start items-center w-full"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -132,7 +123,7 @@ export default function TechniquesSection() {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h2
-                  className={`text-[28px] sm:text-[36px] md:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center ${
+                  className={`text-[28px] sm:text-[36px] md:text-[45px] lg:text-[60px] font-normal leading-[120%] text-center pb-2 ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
                   style={{

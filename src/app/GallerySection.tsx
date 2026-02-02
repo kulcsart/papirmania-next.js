@@ -79,28 +79,19 @@ export default function GallerySection() {
           <div className="flex flex-col gap-[48px] justify-start items-center w-full">
             
             {/* Section Header */}
-            <motion.div 
+            <motion.div
               className="flex flex-col justify-start items-center w-full max-w-[768px] mx-auto px-4 sm:px-8 lg:px-0"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span
-                className={`text-base font-extrabold leading-[150%] text-center uppercase ${
-                  isLightTemplate ? 'text-[#3b3935]' : 'text-[#ECE6E1]'
-                }`}
-                style={{ fontFamily: 'DM Sans' }}
-              >
-                Munkáink
-              </span>
-              
               <div className="flex flex-col gap-[13px] sm:gap-[20px] lg:gap-[24px] justify-center items-center w-full">
-                <h2 
-                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center ${
+                <h2
+                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[120%] text-center pb-2 ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
-                  style={{ 
+                  style={{
                     fontFamily: 'Maname',
                     textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                     marginBlockStart: '0px',

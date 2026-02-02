@@ -87,6 +87,18 @@ class StrapiService {
       },
     });
   }
+
+  // Fetch contact page content
+  async getContactContent() {
+    return this.get<import('../types/strapi.types').StrapiPagesResponse>('/pages-papirmania', {
+      populate: '*',
+      filters: {
+        tag: {
+          $eq: 'contact',
+        },
+      },
+    });
+  }
 }
 
 export const strapiService = new StrapiService();
