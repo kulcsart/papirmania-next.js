@@ -19,6 +19,7 @@ export interface StrapiCourseAttributes {
   title: string;
   price: string;
   description: string;
+  order?: number;
   features?: string[];
   registrationUrl?: string;
   createdAt: string;
@@ -32,6 +33,7 @@ export interface StrapiCourse {
   title?: string;
   price?: string;
   description?: string;
+  order?: number;
   features?: string[];
   registrationUrl?: string;
 }

@@ -25,14 +25,13 @@ export default function TechniquesSection() {
       image: '/images/img_placeholder_image_536x536.png'
     }
   });
-
-  const techniques = [
+  const [techniques, setTechniques] = useState<Array<{ id: TechniqueType; label: string }>>([
     { id: 'cartonnage' as TechniqueType, label: 'Cartonnage' },
     { id: 'bookbinding' as TechniqueType, label: 'Könyvkötés' },
     { id: 'boxes' as TechniqueType, label: 'Dobozkészítés' },
     { id: 'marble' as TechniqueType, label: 'Márványpapír' },
     { id: 'papermache' as TechniqueType, label: 'Papírmasé' },
-  ]
+  ])
 
   const resolveTechniqueId = (label?: string) => {
     if (!label) return null;
@@ -58,14 +57,24 @@ export default function TechniquesSection() {
       try {
         const response: StrapiTechniquesResponse = await strapiService.getTechniques();
         const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
-        
+
         if (response.data && response.data.length > 0) {
+          // Sort by order field
+          const sortedData = [...response.data].sort((a, b) => {
+            const orderA = a.attributes?.order ?? a.order ?? 999;
+            const orderB = b.attributes?.order ?? b.order ?? 999;
+            return orderA - orderB;
+          });
+
           const content: Record<string, TechniqueContent> = {};
-          response.data.forEach((technique) => {
+          const techniquesList: Array<{ id: TechniqueType; label: string }> = [];
+
+          sortedData.forEach((technique) => {
             const attributes = technique.attributes ?? technique;
             const techniqueId = attributes?.slug || resolveTechniqueId(attributes?.label);
             const imageData = getImageAttributes(attributes?.image ?? null);
             if (!techniqueId) return;
+
             content[techniqueId] = {
               title: attributes?.title || attributes?.label || 'Papírtechnika',
               description: attributes?.description || attributes?.desctiption || attributes?.desciption || '',
@@ -73,8 +82,20 @@ export default function TechniquesSection() {
                 ? `${STRAPI_API_URL}${imageData.url}`
                 : '/images/img_placeholder_image_536x536.png',
             };
+
+            techniquesList.push({
+              id: techniqueId as TechniqueType,
+              label: attributes?.label || attributes?.title || 'Technika'
+            });
           });
+
           setTechniquesContent(content);
+          setTechniques(techniquesList);
+
+          // Set first technique as active if current active is not in the list
+          if (techniquesList.length > 0 && !techniquesList.find(t => t.id === activeTechnique)) {
+            setActiveTechnique(techniquesList[0].id);
+          }
         }
       } catch (error) {
         console.error('Error loading techniques from Strapi:', error);
@@ -172,7 +193,7 @@ export default function TechniquesSection() {
                         : 'text-[#77736b] border-[#77736b]'
                     } ${
                       // Desktop: only last item has no right border
-                      technique.id !== 'papermache'
+                      index !== techniques.length - 1
                         ? isLightTemplate
                           ? 'lg:border-r border-[#c8c1b4]'
                           : 'lg:border-r border-[#575252]'

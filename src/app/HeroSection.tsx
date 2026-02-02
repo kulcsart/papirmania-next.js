@@ -36,7 +36,7 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
               
               {/* Left Content */}
               <motion.div
-                className="flex flex-col gap-[40px] sm:gap-[48px] md:gap-[54px] lg:gap-[72px] justify-start items-start w-full lg:w-[48%]"
+                className="flex flex-col gap-[40px] sm:gap-[48px] md:gap-[54px] lg:gap-[72px] justify-start items-center lg:items-start w-full lg:w-[48%]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -44,7 +44,7 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
                 
                 {/* Main Heading */}
                 <motion.h1
-                  className={`text-[36px] sm:text-[48px] md:text-[63px] lg:text-[74px] xl:text-[84px] font-normal leading-[120%] text-left pb-2 ${
+                  className={`text-[36px] sm:text-[48px] md:text-[63px] lg:text-[74px] xl:text-[84px] font-normal leading-[120%] text-center lg:text-left pb-2 ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
                   style={{
@@ -59,11 +59,11 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
                 </motion.h1>
 
                 {/* Content Column */}
-                <div className="flex flex-col gap-[24px] sm:gap-[36px] md:gap-[54px] lg:gap-[72px] justify-start items-start w-full">
+                <div className="flex flex-col gap-[24px] sm:gap-[36px] md:gap-[54px] lg:gap-[72px] justify-start items-center lg:items-start w-full">
                   
                   {/* Description */}
                   <motion.p
-                    className={`text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] font-normal leading-[160%] text-left w-full ${
+                    className={`text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] font-normal leading-[160%] text-center lg:text-left w-full ${
                       isLightTemplate ? 'text-[#575252]' : 'text-white'
                     }`}
                     style={{ fontFamily: 'DM Sans' }}

@@ -82,7 +82,15 @@ export default function HomePage() {
       try {
         // Fetch courses from Strapi
         const coursesResponse: StrapiCoursesResponse = await strapiService.getCourses();
-        const coursesData: Course[] = coursesResponse.data.map((course) => {
+
+        // Sort by order field
+        const sortedCourses = [...coursesResponse.data].sort((a, b) => {
+          const orderA = a.attributes?.order ?? a.order ?? 999;
+          const orderB = b.attributes?.order ?? b.order ?? 999;
+          return orderA - orderB;
+        });
+
+        const coursesData: Course[] = sortedCourses.map((course) => {
           const attributes = course.attributes ?? course;
           return {
             id: course.id.toString(),
