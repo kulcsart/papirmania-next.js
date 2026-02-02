@@ -1,4 +1,5 @@
 'use client';
+import { Scissors } from 'lucide-react';
 
 const Footer = () => {
   const socialLinks = [
@@ -80,7 +81,7 @@ const Footer = () => {
 
                   {/* Workshop Link */}
                   <div className="flex flex-row gap-[16px] justify-center lg:justify-start items-center">
-                    <span className="w-[20px] sm:w-[22px] lg:w-[24px]">🎨</span>
+                    <Scissors className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] text-text-muted" />
                     <a
                       href="https://app.minup.io/book/art-and-deco-workshop/events/ea070dad-1f09-4d2c-abf8-d302293ced12"
                       target="_blank"
