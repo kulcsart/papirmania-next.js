@@ -103,7 +103,7 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
 
               {/* Right Images Stack */}
               <motion.div
-                className="relative w-full lg:w-[48%] h-[280px] sm:h-[360px] md:h-[468px] lg:h-[624px] justify-end items-end"
+                className="relative w-full lg:w-[48%] flex justify-center lg:justify-end items-center lg:h-[624px]"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -112,7 +112,7 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
                 <img
                   src={imageLarge || "/images/img_placeholder_image.png"}
                   alt="Paper crafts workshop"
-                  className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-10 shadow-lg"
+                  className="w-full max-w-[400px] lg:absolute lg:top-0 lg:right-0 lg:w-[84%] lg:max-w-[516px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] lg:z-10 shadow-lg"
                 />
 
                 {/* Secondary Image - hidden on mobile */}
