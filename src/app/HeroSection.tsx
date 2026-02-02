@@ -44,7 +44,7 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
                 
                 {/* Main Heading */}
                 <motion.h1
-                  className={`text-[36px] sm:text-[48px] md:text-[63px] lg:text-[74px] xl:text-[84px] font-normal leading-[110%] text-left ${
+                  className={`text-[36px] sm:text-[48px] md:text-[63px] lg:text-[74px] xl:text-[84px] font-normal leading-[120%] text-left pb-2 ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
                   style={{
@@ -115,11 +115,11 @@ export default function HeroSection({ title, content, imageLarge, imageSmall }: 
                   className="absolute top-0 right-0 w-[84%] max-w-[516px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-10 shadow-lg"
                 />
 
-                {/* Secondary Image */}
+                {/* Secondary Image - hidden on mobile */}
                 <img
                   src={imageSmall || "/images/img_placeholder_image_374x364.png"}
                   alt="Handmade paper art"
-                  className="absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-20 shadow-lg"
+                  className="hidden lg:block absolute bottom-0 left-0 w-[60%] max-w-[364px] h-auto rounded-[12px] sm:rounded-[14px] lg:rounded-[16px] z-20 shadow-lg"
                 />
               </motion.div>
             </div>

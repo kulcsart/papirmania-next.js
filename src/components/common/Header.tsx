@@ -101,6 +101,7 @@ const Header = () => {
             {/* Contact Button */}
             <Button
               text="Kapcsolat"
+              onClick={() => handleMenuClick('contact-section')}
             />
           </div>
         </div>
@@ -158,8 +159,8 @@ const Header = () => {
                     handleMenuClick(item.targetId, item.href)
                   }}
                   className={`text-center uppercase transition-all duration-300 ${
-                    activeMenuItem === item.id 
-                      ? 'text-white' 
+                    activeMenuItem === item.id
+                      ? 'text-white'
                       : 'hover:text-white hover:scale-105'
                   }`}
                   style={{
@@ -174,6 +175,16 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
+
+              {/* Mobile Contact Button */}
+              <Button
+                text="Kapcsolat"
+                onClick={() => {
+                  setMenuOpen(false)
+                  handleMenuClick('contact-section')
+                }}
+                className="mt-2"
+              />
             </div>
           </nav>
         )}

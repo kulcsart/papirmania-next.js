@@ -1,4 +1,5 @@
 'use client';
+import Image from'next/image';
 import { motion } from 'framer-motion';
 import RatingBar from'../components/ui/RatingBar';
 import { useTemplate } from '../components/providers/TemplateProvider';
@@ -28,12 +29,12 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
       id="testimonials-section"
     >
       <div className="w-full">
-        <div className="w-full max-w-content mx-auto px-[40px] sm:px-[60px] lg:px-[80px] py-[56px] sm:py-[84px] lg:py-[112px]">
-          <div className="flex flex-col gap-[48px] justify-center items-center w-full">
+        <div className="w-full max-w-content mx-auto px-[24px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[40px] sm:py-[56px] md:py-[84px] lg:py-[112px]">
+          <div className="flex flex-col gap-[32px] sm:gap-[40px] md:gap-[48px] justify-center items-center w-full">
         
             {/* Section Header */}
-            <motion.div 
-              className="flex flex-col justify-start items-center w-full max-w-[52%] px-4"
+            <motion.div
+              className="flex flex-col justify-start items-center w-full max-w-full sm:max-w-[85%] md:max-w-[70%] lg:max-w-[52%] px-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -48,23 +49,23 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                 Rólunk mondtátok
               </span>
           
-              <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-center items-center w-full">
-                <h2 
-                  className={`text-[30px] sm:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center ${
+              <div className="flex flex-col gap-[8px] sm:gap-[12px] md:gap-[18px] lg:gap-[24px] justify-center items-center w-full">
+                <h2
+                  className={`text-[28px] sm:text-[36px] md:text-[45px] lg:text-[60px] font-normal leading-[110%] text-center ${
                     isLightTemplate ? 'text-[#3b3935]' : 'text-white'
                   }`}
-                  style={{ 
+                  style={{
                     fontFamily: 'Maname',
                     textShadow: isLightTemplate ? 'none' : '0 0 4px rgba(224, 168, 136, 0.40)',
                     marginBlockStart: '0px',
-                    marginBlockEnd: '12px'
+                    marginBlockEnd: '24px'
                   }}
                 >
                   Visszajelzések
                 </h2>
-            
-                <p 
-                  className={`text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-center ${
+
+                <p
+                  className={`text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] font-normal leading-[160%] text-center max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] mx-auto ${
                     isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
                   }`}
                   style={{ fontFamily: 'DM Sans' }}
@@ -77,7 +78,7 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
             {/* Testimonials Grid */}
             <div className="w-full">
               {loading ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
                   {[...Array(4)].map((_, index) => (
                     <div
                       key={index}
@@ -98,61 +99,63 @@ export default function TestimonialsSection({ testimonials, loading }: Testimoni
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
                   {testimonials.map((testimonial, index) => (
-                    <motion.div 
-                      key={testimonial.id} 
-                      className={`rounded-[16px] p-[15px] sm:p-[23px] lg:p-[30px] h-auto ${
+                    <motion.div
+                      key={testimonial.id}
+                      className={`rounded-[12px] sm:rounded-[14px] md:rounded-[16px] p-[20px] sm:p-[24px] md:p-[28px] lg:p-[30px] h-auto ${
                         isLightTemplate ? 'bg-white border border-[#c8c1b4]' : 'bg-[#ffffff33]'
                       }`}
                       initial={{ opacity: 0, y: 40, scale: 0.95 }}
                       whileInView={{ opacity: 1, y: 0, scale: 1 }}
                       viewport={{ once: true, margin: "-50px" }}
-                      transition={{ 
-                        duration: 0.6, 
-                        delay: index * 0.15,
+                      transition={{
+                        duration: 0.6,
+                        delay: index * 0.1,
                         ease: "easeOut"
                       }}
-                      whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+                      whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
                     >
-                      <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-start items-start w-full">
+                      <div className="flex flex-col gap-[16px] sm:gap-[20px] md:gap-[22px] lg:gap-[24px] justify-start items-start w-full">
                         
                         {/* Rating */}
                         {testimonial.id === 'testimonial-3' ? (
-                          <img
+                          <Image
                             src="/images/img_stars.svg"
+                            width={116}
+                            height={18}
                             alt="5 star rating"
                             className="w-[20%] h-auto"
                           />
                         ) : (
-                          <RatingBar
+                          <RatingBar 
                             rating={testimonial.rating}
                             readonly
                             layout_width="auto"
                           />
                         )}
                         
-                        <div className="flex flex-col gap-[12px] sm:gap-[18px] lg:gap-[24px] justify-start items-center w-full">
-                          
+                        <div className="flex flex-col gap-[16px] sm:gap-[20px] md:gap-[22px] lg:gap-[24px] justify-start items-center w-full">
+
                           {/* Comment */}
-                          <p 
-                            className="text-[18px] sm:text-[19px] lg:text-[20px] font-normal leading-[160%] text-left text-[#3b3935] w-full"
+                          <p
+                            className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] font-normal leading-[160%] text-left text-[#3b3935] w-full"
                             style={{ fontFamily: 'DM Sans' }}
                           >
                             "{testimonial.comment}"
                           </p>
 
                           {/* User Info */}
-                          <div className="flex flex-col gap-[1px] sm:gap-[2px] lg:gap-[3px] justify-start items-start w-full">
-                            <span 
-                              className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
+                          <div className="flex flex-col gap-[2px] sm:gap-[3px] justify-start items-start w-full">
+                            <span
+                              className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-semibold leading-[1.4] text-left text-[#3b3935]"
                               style={{ fontFamily: 'DM Sans' }}
                             >
                               {testimonial.name}
                             </span>
-                            
-                            <span 
-                              className="text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[21px] sm:leading-[23px] lg:leading-[24px] text-left text-[#3b3935]"
+
+                            <span
+                              className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] font-normal leading-[1.4] text-left text-[#3b3935]"
                               style={{ fontFamily: 'DM Sans' }}
                             >
                               {testimonial.role}, {testimonial.location}

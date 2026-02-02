@@ -126,22 +126,36 @@ export default function GallerySection() {
               className="w-full columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 lg:gap-8"
             >
               {console.log('Rendering gallery with', galleryImages.length, 'images') || galleryImages.map((image, index) => (
-                <button
+                <div
                   key={image.id}
-                  onClick={() => {
-                    setLightboxIndex(index);
-                    setIsLightboxOpen(true);
-                  }}
-                  className="w-full mb-4 sm:mb-6 lg:mb-8 cursor-pointer hover:opacity-90 transition-opacity break-inside-avoid"
+                  className="w-full mb-4 sm:mb-6 lg:mb-8 break-inside-avoid"
                   style={{ breakInside: 'avoid' }}
                 >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-auto rounded-[16px]"
-                    loading="lazy"
-                  />
-                </button>
+                  <button
+                    onClick={() => {
+                      setLightboxIndex(index);
+                      setIsLightboxOpen(true);
+                    }}
+                    className="w-full cursor-pointer hover:opacity-90 transition-opacity"
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-auto rounded-[16px]"
+                      loading="lazy"
+                    />
+                  </button>
+                  {image.alt && (
+                    <p
+                      className={`mt-2 text-sm sm:text-base text-left px-2 ${
+                        isLightTemplate ? 'text-[#575252]' : 'text-[#E6E4DC]'
+                      }`}
+                      style={{ fontFamily: 'DM Sans' }}
+                    >
+                      {image.alt}
+                    </p>
+                  )}
+                </div>
               ))}
             </div>
           </div>

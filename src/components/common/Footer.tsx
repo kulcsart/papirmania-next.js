@@ -37,10 +37,10 @@ const Footer = () => {
           <div className="flex flex-col gap-[24px]">
             
             {/* Top Section - Logo, Contact, Social */}
-            <div className="flex flex-col lg:flex-row gap-[24px] lg:gap-[40px] justify-between items-start lg:items-center">
-              
+            <div className="flex flex-col lg:flex-row gap-[24px] lg:gap-[40px] justify-between items-center">
+
               {/* Logo */}
-              <div className="flex justify-center lg:justify-start">
+              <div className="flex justify-center lg:justify-start w-full lg:w-auto">
                 <img
                   src="/images/img_footer_logo.png"
                   alt="Papírmánia Footer Logo"
@@ -117,8 +117,8 @@ const Footer = () => {
                   © 2026 Papírmánia. Minden jog fenntartva.
                 </p>
 
-                {/* Footer Links */}
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-[24px] justify-center items-center">
+                {/* Footer Links - Hidden temporarily */}
+                <div className="hidden flex-col sm:flex-row gap-2 sm:gap-[24px] justify-center items-center">
                   {footerLinks?.map((link, index) => (
                     <a
                       key={link?.id}
