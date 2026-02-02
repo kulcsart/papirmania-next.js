@@ -82,7 +82,8 @@ export default function ContactSection() {
         if (response.data && response.data.length > 0) {
           const page = response.data[0];
           const attributes = page.attributes ?? page;
-          const imageData = getImageAttributes(attributes?.image ?? null);
+          // Try page_image_large first, fallback to image
+          const imageData = getImageAttributes(attributes?.page_image_large ?? attributes?.image ?? null);
 
           setContactContent({
             title: attributes?.title || 'Írj nekem',
