@@ -303,7 +303,7 @@ export default function ContactSection() {
 
             {/* Right Image */}
             <motion.div
-              className="w-full lg:w-[38%] mt-8 lg:mt-0"
+              className="w-full lg:w-[38%] mt-[40px] lg:mt-0 flex justify-center lg:justify-start"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
